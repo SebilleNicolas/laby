@@ -3,156 +3,129 @@
 #include <stdlib.h>
 #include "carre.h"
 
-void initialise( char matrice[NMAX][NMAX], int taille)
+void initialise( char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab_col)
 {	
-	// printf("taille initialisation : %d \n", taille);
 	int ligne=0;
 	int col=0;
+	// Compteur pour mettre les chiffres dans les cases
+	int cpt = 1;
+	// Variable qui verifie qu'on est sur une colonne/ligne impair
+	int calc_l,calc_c;
 	// On initialise toutes les cases a 0
-	for (ligne = 0; ligne < taille; ligne++)
+	for (ligne = 0; ligne < taille_tab_ligne; ligne++)
 	{
-		for(col = 0; col < taille; col++)
+		for(col = 0; col < taille_tab_col; col++)
 		{
-			matrice[ligne][col] = '#';
-		}
-	}
-}
-
-
-
-void remplissage(char matrice[NMAX][NMAX],int taille){
-	
-	for (ligne = 0; ligne < taille; ligne++)
-	{
-		for(col = 0; col < taille; col++)
-		{
-			if()
+			calc_l =ligne%2;
+			calc_c = col%2;
+			// On est sur une colonne et une ligne avec chiffre
+			// Impair.
+			if (calc_l && calc_c == 1)
 			{
-				
+				matrice[ligne][col] = cpt;
+				cpt ++;
+			}
+			else
+			{
+				matrice[ligne][col] = 0;
 			}
 		}
 	}
 }
 
-
-
-void affichage(char matrice[NMAX][NMAX], int taille){
-	int ligne,col;
-	printf("taille  affichage	 :  %d \n\n\n", taille);
-	for ( ligne = 0; ligne < taille; ligne++) 		
+int impair(int entier)
+{
+	int calc = 0;
+	calc = entier %2;
+	// 0 ==> pair
+	int r = 0;
+	if(calc == 1)
 	{
-	 	for (col = 0; col < taille; col++)
+		//Nombre impair
+		r = 1;
+	}
+	return r;
+}
+
+void remplissage(char matrice[NMAX][NMAX],int taille_tab_ligne , int taille_tab_col)
+{
+	int ligne = 0;
+	srand(time(NULL));
+	int col=0;
+	int nb_iteration = 0;
+	int nb_max_iteration = ((taille_tab_ligne/2) * (taille_tab_col/2)-1);
+
+	
+	int x = rand()%taille_tab_ligne-1;
+	int y = rand()%taille_tab_col-1;
+
+	while(nb_iteration < nb_max_iteration)
+	{
+		x = rand() % ((taille_tab_ligne-2)) + 1;
+		y = rand() % ((taille_tab_col-2)) + 1;
+		
+
+		// [X][Y] ==> correspond a un mur
+		 printf(" X = %5d\n",x );
+		printf(" Y = %5d\n",y );
+		printf("Nombre ite : %10d \n", nb_iteration);
+		printf("Nombre MAX ite : %10d \n", nb_max_iteration);
+
+		// X==> PAIR, Y==> IMPAIR | on casse HORIZONTALEMENT
+		if (impair(x) == 0 && impair(y) == 1)
+		{
+			casser_mur(matrice,x,(y-1),x,y,x,(y+1), &nb_iteration, taille_tab_ligne,taille_tab_col);
+		}
+		// Y==> PAIR, X==> IMPAIR | on casse VERTIVALEMENT
+		if (impair(x) == 1 && impair(y) == 0)
+		{	
+			casser_mur(matrice, (x-1), y, x, y, (x+1), y, &nb_iteration, taille_tab_ligne,taille_tab_col);
+		}
+	}
+
+}
+
+int casser_mur(char matrice[NMAX][NMAX], int x_top,int y_top,int x_mur,int y_mur,int x_bot,int y_bot, int * nb_iteration,
+	int taille_tab_ligne, int taille_tab_col)
+{
+	int ligne = 0;
+	int col = 0;
+	int cells_top = matrice[x_top][y_top];
+	int cells_mur = matrice[x_mur][y_mur];
+	int cells_bot = matrice[x_bot][y_bot];
+printf("OTOTOTO \n");
+	if (cells_top != cells_bot)
+	{
+			printf("TITI \n");
+
+		cells_mur = cells_top;
+		for (ligne = 0; ligne < taille_tab_ligne; ligne++)
+		{
+		for(col = 0; col < taille_tab_col; col++)
+			{
+				if (matrice[ligne][col] ==cells_bot)
+					matrice[ligne][col]=cells_top;
+			}
+		}
+
+		nb_iteration++;
+	}
+
+}
+
+void affichage(char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab_col)
+{
+	int ligne,col;
+	// printf("taille  affichage	 :  %d \n\n\n", taille);
+	for ( ligne = 0; ligne < taille_tab_ligne; ligne++) 		
+	{
+	 	for (col = 0; col < taille_tab_col; col++)
 	 	{
-	 		printf(" %c ", matrice[ligne][col]);
+
+	 		printf(" %2d ", matrice[ligne][col]);
 	 	}
 	 	printf("\n");
 	}
 
 }
 
-
-void verif_ligne(char matrice[NMAX][NMAX], int taille)
-{	
-	printf(" \n\n >>>>>>>>>> VERIFICATION LIGNE <<<<<<<<<<\n");
-	int ligne,col=0;
-	int nb_total=0;
-	int nb_comparaison=0;
-	// Recupere l'addition des valeurs sur la 1ere colonne
-	for ( ligne = 0; ligne < taille; ligne++)
-	{
-		nb_total = nb_total + matrice[ligne][col];
-	}
-	// Somme des valeurs de la colonne 0 avec les ligne 1,2,3
-	printf("Nb_total  pour ligne  >>>>>>>>>> %d <<<<<<<<<< \n", nb_total);
-	for (ligne = 0; ligne < taille; ligne++)
-	{
-		for(col = 0; col < taille; col++)
-		{
-			nb_comparaison = nb_comparaison + matrice[ligne][col];
-		}
-		// On verifie si la comparaison est égale a la somme calculer précédemment
-		if( nb_comparaison == nb_total)
-		{
-			printf("La ligne %d ==> OK \n",ligne);
-			nb_comparaison = 0;
-		}
-		else
-		{
-			printf("Probleme sur la ligne >>>>>>>>>> ERREUR <<<<<<<<<< \n");
-			printf("nb_comparaison >>>>>>>>>> %d <<<<<<<<<< \n\n\n", nb_comparaison);
-			exit;
-		}
-	}
-	printf("\n\n\n");
-}
-
-
-
-
-void verif_col(char matrice[NMAX][NMAX], int taille)
-{
-	printf(" >>>>>>>>>> VERIFICATION COLONNES <<<<<<<<<<\n");
-	int ligne = 0,col=0;
-	int nb_total_col=0;
-	int nb_comparaison_col=0;
-	// Recupere l'addition des valeurs sur la 1ere ligne
-	for ( col = 0; col < taille; col++)
-	{
-		// nb_total_col = nb_total_col + matrice[ligne][col];
-		nb_total_col += matrice[ligne][col];
-	}
-	// Somme des valeurs de la ligne 0 avec les colonnes 1,2,3
-	printf("Nb_total pour colonne >>>>>>>>>> %d <<<<<<<<<< \n", nb_total_col);
-
-	for (col = 0; col < taille; col++)
-	{
-		for(ligne = 0; ligne < taille; ligne++)
-		{
-			nb_comparaison_col = nb_comparaison_col + matrice[ligne][col];
-		}
-		// On verifie si la comparaison est égale a la somme calculer précédemment
-		if( nb_comparaison_col == nb_total_col)
-		{
-			printf("La colonne %d ==> OK \n",col);
-			nb_comparaison_col = 0;
-		}
-		else
-		{
-			printf("Probleme sur la colonne >>>>>>>>>> ERREUR <<<<<<<<<< \n");
-			printf("nb_comparaison >>>>>>>>>> %d <<<<<<<<<< \n\n\n", nb_comparaison_col);
-			exit;
-		}
-	}
-	printf("\n\n\n");
-}
-
-void verif_diagonal(char matrice[NMAX][NMAX], int taille)
-{
-	printf(" >>>>>>>>>> VERIFICATION DIANGONALE <<<<<<<<<<\n");
-	int ligne_col=0;
-	int nb_total=0;
-	int nb_comparaison=0;
-	// Recupere l'addition des valeurs sur la 1ere ligne
-	for ( ligne_col = 0; ligne_col < taille; ligne_col++)
-	{
-		nb_total += matrice[ligne_col][ligne_col];
-	}
-
-	for (ligne_col = 0; ligne_col < taille; ligne_col++)
-	{
-		nb_comparaison += matrice[ligne_col][ligne_col];
-		
-	}
-	if( nb_comparaison == nb_total)
-		{
-			printf("La diagonal ==> OK \n");
-			nb_comparaison = 0;
-		}
-		else
-		{
-			printf(" Probleme sur la colonne/ligne >>>>>>>>>> ERREUR <<<<<<<<<< \n");
-			printf(" nb_comparaison >>>>>>>>>> %d <<<<<<<<<< \n\n\n", nb_comparaison);
-			exit;
-		}
-	printf("\n\n\n");
-}
