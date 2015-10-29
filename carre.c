@@ -110,16 +110,16 @@ void remplissage(laby_struct * laby)
 		// Y==> PAIR, X==> IMPAIR | on casse VERTIVALEMENT
 		if (impair(ligne) == 1 && impair(col) == 0)
 		{	
-			printf("\n\n\n\n");
-			printf(" ligne = %5d\n",ligne );
-			printf(" col = %5d\n",col );
-			printf("HORIZONTALEMENT !!!! \n");
+			// printf("\n\n\n\n");
+			// printf(" ligne = %5d\n",ligne );
+			// printf(" col = %5d\n",col );
+			// printf("HORIZONTALEMENT !!!! \n");
 			cells_top = laby->matrice[ligne][col-1];
 			cells_mur = laby->matrice[ligne][col];
 			cells_bot = laby->matrice[ligne][col+1];
-			printf("CELL TOP : %15d \n",cells_top );
-			printf("CELL MUR : %15d \n",cells_mur );
-			printf("CELL BOT : %15d \n\n",cells_bot );
+			// printf("CELL TOP : %15d \n",cells_top );
+			// printf("CELL MUR : %15d \n",cells_mur );
+			// printf("CELL BOT : %15d \n\n",cells_bot );
 
 			if (cells_top != cells_bot)
 			{
@@ -208,15 +208,15 @@ void affichage(laby_struct * laby)
 
 
 
-int casser_mur(char matrice[NMAX][NMAX], int ligne_top,int col_top,int ligne_mur,int col_mur,int ligne_bot,int col_bot, int * nb_iteration,
-	int taille_tab_ligne, int taille_tab_col)
+int casser_mur(laby_struct * laby, int ligne_top,int col_top,int ligne_mur,int col_mur,int ligne_bot,int col_bot)
 {
 	int ligne = 0;
 	int col = 0;
 
-	int cells_top = matrice[ligne_top][col_top];
-	int cells_mur = matrice[ligne_mur][col_mur];
-	int cells_bot = matrice[ligne_bot][col_bot];
+	
+	int cells_top = laby->matrice[ligne_top][col_top];
+	int cells_mur = laby->matrice[ligne_mur][col_mur];
+	int cells_bot = laby->matrice[ligne_bot][col_bot];
 	// printf("ligne BOT : %15d \n",ligne_bot );
 	// printf("col BOT : %15d \n",col_bot );
 
