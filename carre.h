@@ -1,4 +1,13 @@
-#define NMAX 30
+#define NMAX 300
+
+
+typedef struct 
+{
+	int size_line;
+	int size_col;
+	int ** matrice;
+	char nom[];
+}laby_struct;
 
 /**
  * @brief Initialise la matrice en mettant toutes les cases a 0
@@ -7,7 +16,7 @@
  * @param taille Taille de la matrice.
  * @return rien
  */
-void initialise( char matrice[NMAX][NMAX], int taille_tab_x , int taille_tab_y);
+void initialise( laby_struct * laby);
 
 
 
@@ -18,7 +27,7 @@ void initialise( char matrice[NMAX][NMAX], int taille_tab_x , int taille_tab_y);
  * @param taille Taille de la matrice.
  * @return rien
  */
-void remplissage(char matrice[NMAX][NMAX],int taille_tab_x , int taille_tab_y);
+void remplissage(laby_struct * laby);
 
 
 
@@ -28,7 +37,7 @@ void remplissage(char matrice[NMAX][NMAX],int taille_tab_x , int taille_tab_y);
  * @param taille Taille de la matrice.
  * @return rien
  */
-void affichage(char matrice[NMAX][NMAX], int taille_tab_x , int taille_tab_y);
+void affichage(laby_struct * laby);
 
 
 

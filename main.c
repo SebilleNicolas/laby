@@ -9,26 +9,31 @@
 int main(int argc, char const *argv[])
 {
 	
-	int taille_tab_ligne;
-	int taille_tab_col;
-	// NMAX définit dans le .h
-	char mat[NMAX][NMAX];
+	laby_struct laby;
+
 
 	printf("Veuillez choisir la taille du labytinhe en X : ");
-	scanf("%d", &taille_tab_ligne);
+	scanf("%d", &laby.size_line);
 	printf("Veuillez choisir la taille du labytinhe en Y : ");
-	scanf("%d", &taille_tab_col);
-	
-		initialise(mat, taille_tab_ligne , taille_tab_col);
-		affichage(mat, taille_tab_ligne , taille_tab_col);
-		remplissage(mat,taille_tab_ligne , taille_tab_col);
-		affichage(mat, taille_tab_ligne , taille_tab_col);
+	scanf("%d", &laby.size_col);
 
-		
-		// remplissage(mat, taille_tab);
-		// verif_ligne(mat, taille_tab);
-		// verif_col(mat, taille_tab);
-		// verif_diagonal(mat, taille_tab);
+	laby.matrice = malloc(laby.size_line * sizeof(int*));
+	int i;
+	for (i = 0; i< laby.size_line;i++)
+	{
+		laby.matrice[i] = malloc(laby.size_col * sizeof(int));
+	}
+	
+	initialise(&laby);
+	affichage(&laby);
+	remplissage(&laby);
+	affichage(&laby);
+
+	
+	// remplissage(mat, taille_tab);
+	// verif_ligne(mat, taille_tab);
+	// verif_col(mat, taille_tab);
+	// verif_diagonal(mat, taille_tab);
 
 	return 1;
 }

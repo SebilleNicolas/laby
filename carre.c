@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "carre.h"
 
-void initialise( char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab_col)
+void initialise( laby_struct * laby)
 {	
 	int ligne=0;
 	int col=0;
@@ -12,9 +12,9 @@ void initialise( char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab
 	// Variable qui verifie qu'on est sur une colonne/ligne impair
 	int calc_l,calc_c;
 	// On initialise toutes les cases a 0
-	for (ligne = 0; ligne < taille_tab_ligne; ligne++)
+	for (ligne = 0; ligne < laby->size_line; ligne++)
 	{
-		for(col = 0; col < taille_tab_col; col++)
+		for(col = 0; col < laby->size_col; col++)
 		{
 			calc_l =ligne%2;
 			calc_c = col%2;
@@ -22,12 +22,12 @@ void initialise( char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab
 			// Impair.
 			if (calc_l && calc_c == 1)
 			{
-				matrice[ligne][col] = cpt;
+				laby->matrice[ligne][col] = cpt;
 				cpt ++;
 			}
 			else
 			{
-				matrice[ligne][col] = 0;
+				laby->matrice[ligne][col] =0;
 			}
 		}
 	}
@@ -47,56 +47,188 @@ int impair(int entier)
 	return r;
 }
 
-void remplissage(char matrice[NMAX][NMAX],int taille_tab_ligne , int taille_tab_col)
+void remplissage(laby_struct * laby)
 {
-	int ligne = 0;
+	int cells_top;
+	int cells_right;
+	int cells_mur;
+	int cells_left;
+	int cells_bot;
 	srand(time(NULL));
-	int col=0;
 	int nb_iteration = 0;
-	int nb_max_iteration = ((taille_tab_ligne/2) * (taille_tab_col/2)-1);
+	int nb_max_iteration = ((laby->size_line/2) * (laby->size_col/2)-1);
 
-	
-	int x = rand()%taille_tab_ligne-1;
-	int y = rand()%taille_tab_col-1;
+	int cpt_mur_casser = 0;
+	int ligne = rand()%laby->size_line-1;
+	int col = rand()%laby->size_col-1;
 
 	while(nb_iteration < nb_max_iteration)
 	{
-		x = rand() % ((taille_tab_ligne-2)) + 1;
-		y = rand() % ((taille_tab_col-2)) + 1;
+		ligne = rand() % ((laby->size_line-2)) + 1;
+		col = rand() % ((laby->size_col-2)) + 1;
 		
 
 		// [X][Y] ==> correspond a un mur
-		 printf(" X = %5d\n",x );
-		printf(" Y = %5d\n",y );
-		printf("Nombre ite : %10d \n", nb_iteration);
-		printf("Nombre MAX ite : %10d \n", nb_max_iteration);
+		
+		// printf("Nombre ite : %10d \n", nb_iteration);
+		// printf("Nombre MAX ite : %10d \n", nb_max_iteration);
 
 		// X==> PAIR, Y==> IMPAIR | on casse HORIZONTALEMENT
-		if (impair(x) == 0 && impair(y) == 1)
-		{
-			casser_mur(matrice,x,(y-1),x,y,x,(y+1), &nb_iteration, taille_tab_ligne,taille_tab_col);
+		if (impair(ligne) == 0 && impair(col) == 1)
+		{	
+			// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+			// printf("VERTIVALEMENT !!!! \n");
+			// casser_mur(matrice, (ligne-1), col, ligne, col, (ligne+1), col, &nb_iteration, taille_tab_ligne,taille_tab_col);
+			cells_right = laby->matrice[ligne-1][col];
+			cells_mur = laby->matrice[ligne][col];
+			cells_left = laby->matrice[ligne+1][col];
+			// printf("CELL right : %15d \n",cells_right );
+			// printf("CELL MUR : %15d \n",cells_mur );
+			// printf("CELL left : %15d \n\n\n",cells_left );
+
+			if (cells_left != cells_right)
+			{
+				// Casse mur
+				laby->matrice[ligne][col] = cells_left;
+
+				// Fusionne les cellules
+				for (ligne = 0; ligne < laby->size_line; ligne++)
+				{
+				for(col = 0; col < laby->size_col; col++)
+					{
+						if (laby->matrice[ligne][col] ==cells_right)
+						{
+							laby->matrice[ligne][col]=cells_left;
+						}
+							
+					}
+				}
+				nb_iteration++;
+			}
+
 		}
 		// Y==> PAIR, X==> IMPAIR | on casse VERTIVALEMENT
-		if (impair(x) == 1 && impair(y) == 0)
+		if (impair(ligne) == 1 && impair(col) == 0)
 		{	
-			casser_mur(matrice, (x-1), y, x, y, (x+1), y, &nb_iteration, taille_tab_ligne,taille_tab_col);
+			printf("\n\n\n\n");
+			printf(" ligne = %5d\n",ligne );
+			printf(" col = %5d\n",col );
+			printf("HORIZONTALEMENT !!!! \n");
+			cells_top = laby->matrice[ligne][col-1];
+			cells_mur = laby->matrice[ligne][col];
+			cells_bot = laby->matrice[ligne][col+1];
+			printf("CELL TOP : %15d \n",cells_top );
+			printf("CELL MUR : %15d \n",cells_mur );
+			printf("CELL BOT : %15d \n\n",cells_bot );
+
+			if (cells_top != cells_bot)
+			{
+				// Casse le mur
+				laby->matrice[ligne][col] = cells_top;
+				// Fusionne les cellules 
+				for (ligne = 0; ligne < laby->size_line; ligne++)
+				{
+				for(col = 0; col < laby->size_col; col++)
+					{
+						if (laby->matrice[ligne][col] ==cells_bot)
+						{
+							laby->matrice[ligne][col]=cells_top;
+						}
+							
+					}
+				}
+
+				nb_iteration++;
+			}
+
+			// casser_mur(matrice,ligne,(col-1),ligne,col,ligne,(col+1), &nb_iteration, taille_tab_ligne,taille_tab_col);
 		}
+	}
+
+	// for (ligne = 0; ligne < laby->size_line; ligne++)
+	// 			{
+	// 			for(col = 0; col < laby->size_col; col++)
+	// 				{
+	// 					if (laby->matrice[ligne][col] != 35)
+	// 						laby->matrice[ligne][col]= ' ';
+	// 				}
+	// 			}
+printf("NOMBRE MUR CASSER : %d \n\n\n\n\n", nb_iteration);
+// 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+// 			printf(" cells_mur = %d \n",cells_mur );
+// 			printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+}
+
+
+void affichage(laby_struct * laby)
+{
+	int ligne,col;
+	// printf("taille  affichage	 :  %d \n\n\n", taille);
+	for ( ligne = 0; ligne < laby->size_line; ligne++) 		
+	{
+	 	for (col = 0; col < laby->size_col; col++)
+	 	{
+	 		if (laby->matrice[ligne][col] == 0)
+	 		{
+	 			printf(" # ");
+	 		}
+	 		else
+	 		{
+	 			printf("   ");
+
+	 		}
+	 	}
+	 	printf("\n");
 	}
 
 }
 
-int casser_mur(char matrice[NMAX][NMAX], int x_top,int y_top,int x_mur,int y_mur,int x_bot,int y_bot, int * nb_iteration,
+// int put_start_end(char * matrice)
+// {
+	
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int casser_mur(char matrice[NMAX][NMAX], int ligne_top,int col_top,int ligne_mur,int col_mur,int ligne_bot,int col_bot, int * nb_iteration,
 	int taille_tab_ligne, int taille_tab_col)
 {
 	int ligne = 0;
 	int col = 0;
-	int cells_top = matrice[x_top][y_top];
-	int cells_mur = matrice[x_mur][y_mur];
-	int cells_bot = matrice[x_bot][y_bot];
-printf("OTOTOTO \n");
+
+	int cells_top = matrice[ligne_top][col_top];
+	int cells_mur = matrice[ligne_mur][col_mur];
+	int cells_bot = matrice[ligne_bot][col_bot];
+	// printf("ligne BOT : %15d \n",ligne_bot );
+	// printf("col BOT : %15d \n",col_bot );
+
+
+	// 	printf("OTOTOTO \n");
+	// 	printf("CELL TOP : %15d \n",cells_top );
+	// 	printf("CELL MUR : %15d \n",cells_mur );
+	// 	printf("CELL BOT : %15d \n\n\n",cells_bot );
+
 	if (cells_top != cells_bot)
 	{
-			printf("TITI \n");
+			// printf("\n\n\n\n\n\n\n\n\n\n TITI \n\n\n\n\n\n\n");
 
 		cells_mur = cells_top;
 		for (ligne = 0; ligne < taille_tab_ligne; ligne++)
@@ -109,23 +241,7 @@ printf("OTOTOTO \n");
 		}
 
 		nb_iteration++;
+
 	}
 
 }
-
-void affichage(char matrice[NMAX][NMAX], int taille_tab_ligne , int taille_tab_col)
-{
-	int ligne,col;
-	// printf("taille  affichage	 :  %d \n\n\n", taille);
-	for ( ligne = 0; ligne < taille_tab_ligne; ligne++) 		
-	{
-	 	for (col = 0; col < taille_tab_col; col++)
-	 	{
-
-	 		printf(" %2d ", matrice[ligne][col]);
-	 	}
-	 	printf("\n");
-	}
-
-}
-
