@@ -14,8 +14,10 @@ int main(int argc, char const *argv[])
 
 	printf("Veuillez choisir la taille du labytinhe en X : ");
 	scanf("%d", &laby.size_line);
+	fflush2();
 	printf("Veuillez choisir la taille du labytinhe en Y : ");
 	scanf("%d", &laby.size_col);
+	fflush2();
 
 	laby.matrice = malloc(laby.size_line * sizeof(int*));
 	if (laby.matrice == NULL)
@@ -32,6 +34,7 @@ int main(int argc, char const *argv[])
 	initialise(&laby);
 	affichage(&laby);
 	remplissage(&laby);
+	start_end(&laby);
 	affichage(&laby);
 
 	
