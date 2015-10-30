@@ -18,6 +18,11 @@ int main(int argc, char const *argv[])
 	scanf("%d", &laby.size_col);
 
 	laby.matrice = malloc(laby.size_line * sizeof(int*));
+	if (laby.matrice == NULL)
+	{
+		perror("Probleme allocation dynamique");
+		exit(-1);
+	}
 	int i;
 	for (i = 0; i< laby.size_line;i++)
 	{
