@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "carre.c"
+#include "carre.h"
+#include "test_unitaire_etape_1.h"
+
 
 
 int main(int argc, char const *argv[])

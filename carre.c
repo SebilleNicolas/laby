@@ -109,11 +109,15 @@ void affichage(laby_struct * laby)
 	 	{
 	 		if (laby->matrice[ligne][col] == 0)
 	 		{
-	 			printf(" # ");
+	 			printf("#");
+	 		}
+	 		else if (laby->matrice[ligne][col] == -1)
+	 		{
+	 			printf("o");
 	 		}
 	 		else
 	 		{
-	 			printf("   ");
+	 			printf(" ");
 
 	 		}
 	 	}
@@ -123,6 +127,11 @@ void affichage(laby_struct * laby)
 	printf("\n");
 
 }
+
+// void avancer(laby_struct * laby)
+// {
+
+// }
 
 
 void casser_mur(laby_struct * laby, int cells_top ,int * cells_mur ,int cells_bot, int * nb_iteration)
@@ -160,6 +169,6 @@ void fflush2()
 
 void start_end(laby_struct * laby)
 {
-	laby->matrice[1][0] = 1;
-	laby->matrice[laby->size_line-2][laby->size_col-1] = 1;
+	laby->matrice[1][0] = -1;
+	laby->matrice[laby->size_line-2][laby->size_col-1] = -2;
 }

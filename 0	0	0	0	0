@@ -7,3 +7,17 @@
 	2		0	0	0	0	0	
 	3		0	3	0	4	0
 	4		0	0	0	0	0	
+
+
+	pour test casser mur
+
+			0	1	2	3	4
+
+	0		0	0	0	0	0
+	1		0	1  -0-	2	0
+	2		0	0	0	0	0	
+	3		0	3	0	4	0
+	4		0	0	0	0	0	
+
+
+	On passe le mur en parametre, on appelle la fonction cassermur et on test apres si le mut prend la valeur de cells_top
