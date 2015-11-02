@@ -1,7 +1,6 @@
+#include "test_unitaire_etape_1.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "carre.h"
+
 int ** matrice;
 //
 void test_function_casser_mur_impair()
@@ -49,6 +48,8 @@ void creer_tab()
 	matrice[1][3] = 2;
 
 }
+
+//Faire fonction clean qui fait un free et qui libere l'espace mémoire d'un malloc (par ex)
 
 // 0	0	0	0	0
 // 0	1	0	2	0

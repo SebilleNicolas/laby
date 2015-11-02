@@ -1,6 +1,3 @@
-
-#include <stdio.h>
-#include <stdlib.h>
 #include "carre.h"
 
 void initialise( laby_struct * laby)

@@ -4,7 +4,6 @@
 #include <math.h>
 
 #include "carre.h"
-#include "test_unitaire_etape_1.h"
 
 
 
