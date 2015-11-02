@@ -3,7 +3,7 @@
 
 int ** matrice;
 //
-void test_function_casser_mur_impair()
+void test_function_casser_mur_horizontal()
 {
 	laby_struct * labytest = NULL;
 
@@ -20,12 +20,41 @@ void test_function_casser_mur_impair()
 
 	// labytest->matrice = tab_test;
 
-int cells_top = labytest->matrice[1][1];
-int * cells_mur = &labytest->matrice[1][2];
-int cells_bot = labytest->matrice[1][3];
-int nb_ite = 5;
+	int cells_top = labytest->matrice[1][1];
+	int * cells_mur = &labytest->matrice[1][2];
+	int cells_bot = labytest->matrice[1][3];
+	int nb_ite = 5;
 
-casser_mur(labytest, cells_top ,cells_mur ,cells_bot, &nb_ite);
+	casser_mur(labytest, cells_top ,cells_mur ,cells_bot, &nb_ite);
+
+	if(labytest->matrice[1][2] != 0)
+	{
+		printf("mur casser horizontalement -----> REUSSI \n");
+	}
+
+}
+
+
+void test_function_casser_mur_vertical()
+{
+	laby_struct * labytest = NULL;
+
+	labytest = malloc(sizeof(laby_struct));
+	creer_tab();
+	labytest->matrice = matrice;
+
+
+	int cells_top = labytest->matrice[1][1];
+	int * cells_mur = &labytest->matrice[2][1];
+	int cells_bot = labytest->matrice[3][1];
+	int nb_ite = 5;
+
+	casser_mur(labytest, cells_top ,cells_mur ,cells_bot, &nb_ite);
+
+	if(labytest->matrice[2][1] != 0)
+	{
+		printf("mur casser vertialement -----> REUSSI \n");
+	}
 
 }
 
@@ -43,9 +72,16 @@ void creer_tab()
 	{
 		matrice[i] = calloc(5 , sizeof(int));
 	}
+	// Pour casser le mur horizontal
 	matrice[1][1] = 1;
 	matrice[1][2] = 0;
 	matrice[1][3] = 2;
+
+
+	// Pour casser le mur vertical
+	matrice[2][1] = 0;
+	matrice[3][1] = 3;
+
 
 }
 
