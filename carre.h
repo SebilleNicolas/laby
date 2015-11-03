@@ -57,7 +57,7 @@ void fflush2();
 
 /**
  * @brief Casse l'entrée et la sortie du labyrinthe
- * @param matrice une matrice avec NMAX en valeur.
+ * @param Pointeur Structure du labyrinthe
  * @return rien
  */
 void start_end(laby_struct * laby);
@@ -69,3 +69,41 @@ void casser_mur(laby_struct * laby, int  cells_top ,int * cells_mur ,int  cells_
  * @return 0 ==> pair | 1 ==> impair
  */
 int impair(int entier);
+
+
+/**
+ * @brief Libere les tableaux dynamique de la mémoire
+ * @param Pointeur Structure du labyrinthe
+ */
+void free_laby(laby_struct * laby);
+
+
+/**
+ * @brief Demande la direction au joueur, et avance en fonction de la case jouer
+ * @param Pointeur Structure du labyrinthe
+ */
+void avancer(laby_struct * laby, int * ligne , int * colonne);
+
+/**
+ * @brief deplace le joueur dans la case en haut si il n'y a pas de mur 
+ * @param Pointeur Structure du labyrinthe
+ */
+void aller_haut(laby_struct * laby, int * ligne , int * colonne);
+
+/**
+ * @brief deplace le joueur dans la case a gauche si il n'y a pas de mur 
+ * @param Pointeur Structure du labyrinthe
+ */
+void aller_gauche(laby_struct * laby, int * ligne , int * colonne);
+
+/**
+ * @brief deplace le joueur dans la case en bas si il n'y a pas de mur 
+ * @param Pointeur Structure du labyrinthe
+ */
+void aller_bas(laby_struct * laby, int * ligne , int * colonne);
+
+/**
+ * @brief deplace le joueur dans la case a droite si il n'y a pas de mur 
+ * @param Pointeur Structure du labyrinthe
+ */
+void aller_droite(laby_struct * laby, int * ligne , int * colonne);

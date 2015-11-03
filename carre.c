@@ -2,6 +2,7 @@
 
 void initialise( laby_struct * laby)
 {	
+	
 	int ligne=0;
 	int col=0;
 	// Compteur pour mettre les chiffres dans les cases
@@ -93,7 +94,7 @@ void remplissage(laby_struct * laby)
 		}
 	}
 
-	printf("NOMBRE MUR CASSER : %d \n\n\n\n\n", nb_iteration);
+	printf("NOMBRE MUR CASSER : %d \n\n", nb_iteration);
 }
 
 
@@ -124,11 +125,6 @@ void affichage(laby_struct * laby)
 	printf("\n");
 
 }
-
-// void avancer(laby_struct * laby)
-// {
-
-// }
 
 
 void casser_mur(laby_struct * laby, int cells_top ,int * cells_mur ,int cells_bot, int * nb_iteration)
@@ -168,4 +164,86 @@ void start_end(laby_struct * laby)
 {
 	laby->matrice[1][0] = -1;
 	laby->matrice[laby->size_line-2][laby->size_col-1] = -2;
+}
+
+// Libere l'espace memoire 
+void free_laby(laby_struct * laby)
+{
+	int i;
+	for (i = 0; i< laby->size_line;i++)
+	{
+		free(laby->matrice[i]);
+	}
+	free(laby->matrice);
+	free(laby);
+}
+
+
+
+
+void avancer(laby_struct * laby, int * ligne , int * colonne)
+{
+	char direction;
+	printf("Entrez la direction :\n");
+	scanf("%c",&direction);
+	//Aller en haut
+	if(direction == "z")
+	{
+		aller_haut(laby,ligne,colonne);
+	}
+	//Aller a gauche
+	if(direction == "q")
+	{
+		aller_gauche(laby,ligne,colonne);
+	}
+	//Aller a bas
+	if(direction == "s")
+	{
+		aller_bas(laby,ligne,colonne);
+	}
+	//Aller a droite
+	if(direction == "d")
+	{
+		aller_droite(laby,ligne,colonne);
+	}
+}
+
+
+void aller_haut(laby_struct * laby, int * ligne , int * colonne)
+{
+	int ligne_av = ligne-1;
+	//Verifie qu'il n'y a pas de mur en haut
+	if(laby->matrice[ligne_av][colonne] != 0)
+	{
+		laby->matrice[ligne_av][colonne] = -1;
+		laby->matrice[ligne][colonne] = 2;
+	}
+}
+
+void aller_gauche(laby_struct * laby, int * ligne , int * colonne)
+{
+	//Verifie qu'il n'y a pas de mur en haut
+	if(laby->matrice[ligne][colonne-1] != 0)
+	{
+		laby->matrice[ligne][colonne-1] = -1;
+		laby->matrice[ligne][colonne] = 3;
+	}
+}
+void aller_bas(laby_struct * laby, int * ligne , int * colonne)
+{
+	//Verifie qu'il n'y a pas de mur en haut
+	if(laby->matrice[ligne+1][colonne] != 0)
+	{
+		laby->matrice[ligne+1][colonne] = -1;
+		laby->matrice[ligne][colonne] = 4;
+	}
+}
+void aller_droite(laby_struct * laby, int * ligne , int * colonne)
+{
+	//Verifie qu'il n'y a pas de mur en haut
+	if(laby->matrice[ligne][colonne+1] != 0)
+	{
+		laby->matrice[ligne][colonne+1] = -1;
+		laby->matrice[ligne][colonne] = 5;
+	}
 }
