@@ -57,7 +57,7 @@ void fflush2();
 
 /**
  * @brief Casse l'entrée et la sortie du labyrinthe
- * @param matrice une matrice avec NMAX en valeur.
+ * @param Pointeur Structure du labyrinthe
  * @return rien
  */
 void start_end(laby_struct * laby);
@@ -69,3 +69,10 @@ void casser_mur(laby_struct * laby, int  cells_top ,int * cells_mur ,int  cells_
  * @return 0 ==> pair | 1 ==> impair
  */
 int impair(int entier);
+
+
+/**
+ * @brief Libere les tableaux dynamique de la mémoire
+ * @param Pointeur Structure du labyrinthe
+ */
+void free_laby(laby_struct * laby);

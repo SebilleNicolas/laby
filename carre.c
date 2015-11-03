@@ -2,6 +2,7 @@
 
 void initialise( laby_struct * laby)
 {	
+	
 	int ligne=0;
 	int col=0;
 	// Compteur pour mettre les chiffres dans les cases
@@ -93,7 +94,7 @@ void remplissage(laby_struct * laby)
 		}
 	}
 
-	printf("NOMBRE MUR CASSER : %d \n\n\n\n\n", nb_iteration);
+	printf("NOMBRE MUR CASSER : %d \n\n", nb_iteration);
 }
 
 
@@ -168,4 +169,17 @@ void start_end(laby_struct * laby)
 {
 	laby->matrice[1][0] = -1;
 	laby->matrice[laby->size_line-2][laby->size_col-1] = -2;
+}
+
+void free_laby(laby_struct * laby)
+{
+	int i;
+	for (i = 0; i< laby->size_line;i++)
+	{
+		free(laby->matrice[i]);
+	}
+	free(laby->matrice);
+	free(laby);
+
+	
 }
