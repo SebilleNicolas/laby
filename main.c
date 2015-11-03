@@ -12,7 +12,11 @@ int main(int argc, char const *argv[])
 	
 	laby_struct laby;
 	int i;
-	char end ;
+// <<<<<<< HEAD
+// 	char end ;
+// =======
+
+// >>>>>>> dcbbe59148906ca241ead75192a99ec7c3b5ca05
 
 	printf("Veuillez choisir la taille du labytinhe en X : ");
 	scanf("%d", &laby.size_line);

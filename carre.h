@@ -75,35 +75,39 @@ int impair(int entier);
  * @brief Libere les tableaux dynamique de la mémoire
  * @param Pointeur Structure du labyrinthe
  */
-void free_laby(laby_struct * laby);
+// <<<<<<< HEAD
+// void free_laby(laby_struct * laby);
 
 
 /**
  * @brief Demande la direction au joueur, et avance en fonction de la case jouer
  * @param Pointeur Structure du labyrinthe
  */
-void avancer(laby_struct * laby, int * ligne , int * colonne);
+// void avancer(laby_struct * laby, int * ligne , int * colonne);
 
 /**
  * @brief deplace le joueur dans la case en haut si il n'y a pas de mur 
  * @param Pointeur Structure du labyrinthe
  */
-void aller_haut(laby_struct * laby, int * ligne , int * colonne);
+// void aller_haut(laby_struct * laby, int * ligne , int * colonne);
 
 /**
  * @brief deplace le joueur dans la case a gauche si il n'y a pas de mur 
  * @param Pointeur Structure du labyrinthe
  */
-void aller_gauche(laby_struct * laby, int * ligne , int * colonne);
+// void aller_gauche(laby_struct * laby, int * ligne , int * colonne);
 
 /**
  * @brief deplace le joueur dans la case en bas si il n'y a pas de mur 
  * @param Pointeur Structure du labyrinthe
  */
-void aller_bas(laby_struct * laby, int * ligne , int * colonne);
+// void aller_bas(laby_struct * laby, int * ligne , int * colonne);
 
 /**
  * @brief deplace le joueur dans la case a droite si il n'y a pas de mur 
  * @param Pointeur Structure du labyrinthe
  */
-void aller_droite(laby_struct * laby, int * ligne , int * colonne);
+// void aller_droite(laby_struct * laby, int * ligne , int * colonne);
+// =======
+// void free_laby(laby_struct * laby);
+// >>>>>>> dcbbe59148906ca241ead75192a99ec7c3b5ca05
